@@ -59,18 +59,28 @@ public class TileComboChecker {
     /**
      *
      * @param tiles
-     * @return true if all the tiles are of the same value
+     * @return true if all the tiles are of the same value and different colors
      */
     public boolean isSet(List<Tile> tiles) {
+        return allSameValue(tiles) && allDifferentColors(tiles);
+    }
+    
+    private boolean allSameValue(List<Tile> tiles) {
         int value = tiles.get(0).getValue();
+        for (Tile theTile : tiles) {
+            if (theTile.getValue() != value) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean allDifferentColors(List<Tile> tiles) {
         EnumMap<TileColor, Boolean> colorsSeenMap = new EnumMap<TileColor, Boolean>(TileColor.class);
         for (TileColor color : TileColor.values()) {
             colorsSeenMap.put(color, false);
         }
         for (Tile theTile : tiles) {
-            if (theTile.getValue() != value) {
-                return false;
-            }
             boolean colorSeen = colorsSeenMap.get(theTile.getColor());
             if (colorSeen) {
                 return false;
