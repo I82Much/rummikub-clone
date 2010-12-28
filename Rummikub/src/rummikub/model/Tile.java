@@ -26,11 +26,18 @@ public class Tile {
         return value;
     }
 
+    /**
+     * @return how many points to be penalized if the player is left with this
+     * tile in his hand
+     */
+    public int getPenaltyValue() {
+        return value;
+    }
+
     @Override
     public String toString() {
         return color + " " + value;
     }
 
-
-
+    // TODO: Add joker
 }
