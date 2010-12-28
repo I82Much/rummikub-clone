@@ -1,5 +1,6 @@
 package rummikub.model;
 
+import java.util.EnumMap;
 import java.util.List;
 import rummikub.model.Tile.TileColor;
 
@@ -62,10 +63,19 @@ public class TileComboChecker {
      */
     public boolean isSet(List<Tile> tiles) {
         int value = tiles.get(0).getValue();
+        EnumMap<TileColor, Boolean> colorsSeenMap = new EnumMap<TileColor, Boolean>(TileColor.class);
+        for (TileColor color : TileColor.values()) {
+            colorsSeenMap.put(color, false);
+        }
         for (Tile theTile : tiles) {
             if (theTile.getValue() != value) {
                 return false;
             }
+            boolean colorSeen = colorsSeenMap.get(theTile.getColor());
+            if (colorSeen) {
+                return false;
+            }
+            colorsSeenMap.put(theTile.getColor(), true);
         }
         return true;
     }

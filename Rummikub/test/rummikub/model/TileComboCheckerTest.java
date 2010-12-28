@@ -45,6 +45,11 @@ public class TileComboCheckerTest {
     }
 
     @Test
+    public void testRepeatedColorSet() {
+        assertFalse(checker.isSet(Arrays.asList(redThree, redThree, blackThree)));
+    }
+
+    @Test
     public void testSetWithJoker() {
         fail();
     }
