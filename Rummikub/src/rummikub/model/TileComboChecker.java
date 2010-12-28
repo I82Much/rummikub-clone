@@ -37,23 +37,13 @@ public class TileComboChecker {
     /**
      *
      * @param tiles
-     * @return true if the set is completely consecutive, e.g. 1,2,3,4
+     * @return true if the set is completely consecutive, e.g. 1,2,3,4, as well as the same color
      */
     public boolean isRun(List<Tile> tiles) {
-        int targetValue = tiles.get(0).getValue() + 1;
-        TileColor targetColor = tiles.get(0).getColor();
-        for (Tile theTile : tiles.subList(1, tiles.size())) {
-            if (theTile.getValue() != targetValue) {
-                return false;
-            }
-            // Must be all the same color to have a run
-            else if (theTile.getColor() != targetColor) {
-                return false;
-            }
-            targetValue++;
-        }
-        return true;
+        return allSameColor(tiles) && consecutiveIntegers(tiles);
     }
+
+
 
     // TODO: handle joker
     /**
@@ -86,6 +76,27 @@ public class TileComboChecker {
                 return false;
             }
             colorsSeenMap.put(theTile.getColor(), true);
+        }
+        return true;
+    }
+
+    private boolean allSameColor(List<Tile> tiles) {
+        TileColor targetColor = tiles.get(0).getColor();
+        for (Tile theTile : tiles.subList(1, tiles.size())) {
+            if (theTile.getColor() != targetColor) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean consecutiveIntegers(List<Tile> tiles) {
+        int targetValue = tiles.get(0).getValue() + 1;
+        for (Tile theTile : tiles.subList(1, tiles.size())) {
+            if (theTile.getValue() != targetValue) {
+                return false;
+            }
+            targetValue++;
         }
         return true;
     }
